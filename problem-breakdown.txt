@@ -1,0 +1,16 @@
+
+Steps 1-5:
+Write a function called playRound() that simulates a game of rock-paper-scissors between a player and the computer.
+parameters: playerSelection and computerSelection
+return value: A string that declares the winner and each player's choice like so: "You {win/lose}! {winningChoice} beats {losingChoice}
+
+Notes:
+- The playerSelection parameter should be case-insensitive (i.e. the user can type "rock", "Rock", "RoCk", etc. and it will lead to the same calculation)
+- Ties should result in a replay
+- The computerChoice should be randomly generated using another function called getComputerChoice()
+
+Step 6:
+Write a function called game() that uses the function created above to play a best of 5 game that keeps score and reports the winner at the end.
+Notes:
+- This function should use prompt() to get input from the user.
+- Will probably need to tweak the return value of the playRound() function for this.
