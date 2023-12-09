@@ -15,33 +15,36 @@ buttons.forEach(button => {
 function handleButtonClick(event) {
     let computerChoice = getComputerChoice();
     let playerChoice = event.target.id;
-    playRound(playerChoice, computerChoice);
-    scoresDisplay.textContent = getScores(playerScore, computerScore);
+    playRound(playerChoice, computerChoice, scoresDisplay);
     if (playerScore === 5) {
-        finishGame(scoresDisplay, 'Player');
+        finishGame('Player');
     }
     if (computerScore === 5) {
-        finishGame(scoresDisplay, 'Computer');
+        finishGame('Computer');
     }
 }
 
-function finishGame(display, winner) {
+function finishGame(winner) {
     buttons.forEach(button => button.disabled = true);
-    display.textContent = `${winner} wins!`;
+    scoresDisplay.textContent = `${winner} wins!`;
     let resetButton = document.createElement('button');
     resetButton.textContent = 'Restart game';
     resetButton.addEventListener('click', () => {
         playerScore = 0;
         computerScore = 0;
         buttons.forEach(button => button.disabled = false);
-        display.textContent = getScores(playerScore, computerScore);
+        scoresDisplay.textContent = getScores(playerScore, computerScore);
         document.querySelector('body').removeChild(resetButton);
     });
     document.querySelector('body').appendChild(resetButton);
 }
 
 function getScores(playerScore, computerScore) {
-    return `Player Score: ${playerScore}\nComputer Score: ${computerScore}\n`;
+    return `Player Score: ${playerScore}\r\nComputer Score: ${computerScore}\r\n`;
+}
+
+function getRoundWinner(winner, winningChoice, losingChoice) {
+    return `${winner} wins! ${winningChoice} beats ${losingChoice}`;
 }
 
 function getComputerChoice() {
@@ -59,15 +62,15 @@ function playRound(playerChoice, computerChoice) {
     for (let winner in outcomes) {
         if (playerChoice === winner) {
             if (computerChoice === outcomes[winner]) {
-                console.log(`Player wins! ${playerChoice} beats ${computerChoice}`)
                 playerScore++;
+                scoresDisplay.textContent = getScores(playerScore, computerScore) + getRoundWinner('Player', playerChoice, computerChoice);
+                
             } else if (playerChoice === computerChoice) {
-                console.log('draw!');
-                playerScore++;
-                computerScore++;
+                scoresDisplay.textContent = getScores(playerScore, computerScore) + `Its a draw! Both players chose ${playerChoice}`;
             } else {
-                console.log(`Computer wins! ${computerChoice} beats ${playerChoice}`);
                 computerScore++;
+                scoresDisplay.textContent = getScores(playerScore, computerScore) + getRoundWinner('Computer', computerChoice, playerChoice);
+                
             }
         }
     }
