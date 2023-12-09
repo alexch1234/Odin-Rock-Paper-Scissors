@@ -11,7 +11,7 @@ function isPlayerChoiceValid(playerChoice) {
 }
 
 function playRound(playerChoice, computerChoice) {
-    outcomes = {
+    const outcomes = {
         "rock": "scissors",
         "paper": "rock",
         "scissors": "paper" 
@@ -19,7 +19,13 @@ function playRound(playerChoice, computerChoice) {
 
     for (let winner in outcomes) {
         if (playerChoice == winner) {
-            return computerChoice == outcomes[winner] ? "Player" : "Computer";
+            if (computerChoice == outcomes[winner]) {
+                console.log(`Player wins! ${playerChoice} beats ${computerChoice}`)
+                return "Player";
+            } else {
+                console.log(`Computer wins! ${computerChoice} beats ${playerChoice}`)
+                return "Computer";
+            }
         }
     }
 }
@@ -29,7 +35,6 @@ function playGame() {
     computerScore = 0;
     while(playerScore < 3 && computerScore < 3) {
         playerChoice = prompt(`Score: ${playerScore}-${computerScore} Please choose Rock, Paper, or Scissors: `).toLowerCase();
-        computerChoice = getComputerChoice().toLowerCase();
         while (!isPlayerChoiceValid(playerChoice)) {
             playerChoice = prompt("Invalid choice. Please choose Rock, Paper, or Scissors: ").toLowerCase();
         }
